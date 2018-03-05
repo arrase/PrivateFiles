@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Private Files</string>
+    <string name="action_settings">Settings</string>
+    <string name="gdrive">GDrive</string>
+    <string name="sd_card">SD Card</string>
+    <string name="internal_storage">Internal storage</string>
+    <string name="create_volume">Create new volume</string>
+    <string name="import_volume">Import existing volume</string>
+    <string name="volumes">Volumes</string>
+</resources>
