@@ -128,9 +128,15 @@ public class VolumeListFragment extends Fragment {
         switch (requestCode) {
             case PrivateFilesConstants.SELECT_STORAGE_TYPE_DIALOG:
                 if (resultCode == Activity.RESULT_OK) {
+
                     Bundle bundle = data.getExtras();
-                    String storage_type = bundle != null ? bundle.getString(PrivateFilesConstants.STORAGE_TYPE) : null;
+                    if (bundle == null) {
+                        break;
+                    }
+
+                    String storage_type = bundle.getString(PrivateFilesConstants.STORAGE_TYPE);
                 }
+
                 break;
         }
     }
