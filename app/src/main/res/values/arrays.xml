@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="volume_sources" >
+    <string-array name="volume_sources">
         <item>@string/internal_storage</item>
         <item>@string/sd_card</item>
         <item>@string/gdrive</item>

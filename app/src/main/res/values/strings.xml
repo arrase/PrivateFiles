@@ -6,5 +6,4 @@
     <string name="internal_storage">Internal storage</string>
     <string name="create_volume">Create new volume</string>
     <string name="import_volume">Import existing volume</string>
-    <string name="volumes">Volumes</string>
 </resources>
