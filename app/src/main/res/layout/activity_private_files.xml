@@ -55,6 +55,6 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         app:backgroundTint="@android:color/darker_gray"
-        app:srcCompat="@android:drawable/ic_secure" />21
+        app:srcCompat="@android:drawable/ic_secure" />
 
 </android.support.design.widget.CoordinatorLayout>
