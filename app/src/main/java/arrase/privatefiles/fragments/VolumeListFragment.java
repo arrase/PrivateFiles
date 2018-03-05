@@ -1,7 +1,9 @@
 package arrase.privatefiles.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.view.LayoutInflater;
@@ -11,19 +13,17 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import arrase.privatefiles.R;
-import arrase.privatefiles.constants.SecureFilesConstants;
+import arrase.privatefiles.constants.PrivateFilesConstants;
 import arrase.privatefiles.dialogs.SelectSourceDialog;
 
-/**
- * A placeholder fragment containing a simple view.
- */
+
 public class VolumeListFragment extends Fragment {
 
     private Boolean isFabOpen = false;
     private FloatingActionButton create_fab, import_fab, add_fab;
     private Animation fab_open, fab_close;
     private Context mContext;
-    private OnFragmentInteractionListener mListener;
+    private String volumeAction;
 
     public VolumeListFragment() {
     }
@@ -31,8 +31,10 @@ public class VolumeListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View v = inflater.inflate(R.layout.volume_list, container, false);
 
+        // Main fab
         add_fab = (FloatingActionButton) v.findViewById(R.id.add_fab);
         add_fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,44 +43,54 @@ public class VolumeListFragment extends Fragment {
             }
         });
 
+        // Create new volume fab
         create_fab = (FloatingActionButton) v.findViewById(R.id.create_fab);
         create_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 animateFAB();
+                volumeAction = PrivateFilesConstants.VOLUME_CREATE;
+
                 Bundle arguments = new Bundle();
                 arguments.putString(
-                        SecureFilesConstants.VOLUME_ACTION, SecureFilesConstants.VOLUME_CREATE
+                        PrivateFilesConstants.SELECT_STORAGE_TYPE_DIALOG_TITLE, getString(R.string.create_volume)
                 );
 
                 SelectSourceDialog dialog = new SelectSourceDialog();
                 dialog.setArguments(arguments);
+                dialog.setTargetFragment(VolumeListFragment.this, PrivateFilesConstants.SELECT_STORAGE_TYPE_DIALOG);
                 dialog.show(getFragmentManager(), "");
             }
         });
 
+        // Import existing volume fab
         import_fab = (FloatingActionButton) v.findViewById(R.id.import_fab);
         import_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 animateFAB();
+                volumeAction = PrivateFilesConstants.VOLUME_IMPOT;
+
                 Bundle arguments = new Bundle();
                 arguments.putString(
-                        SecureFilesConstants.VOLUME_ACTION, SecureFilesConstants.VOLUME_IMPOT
+                        PrivateFilesConstants.SELECT_STORAGE_TYPE_DIALOG_TITLE, getString(R.string.import_volume)
                 );
 
                 SelectSourceDialog dialog = new SelectSourceDialog();
                 dialog.setArguments(arguments);
+                dialog.setTargetFragment(VolumeListFragment.this, PrivateFilesConstants.SELECT_STORAGE_TYPE_DIALOG);
                 dialog.show(getFragmentManager(), "SelectSource");
             }
         });
 
+        // Load animations
         fab_open = AnimationUtils.loadAnimation(mContext, R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(mContext, R.anim.fab_close);
 
         return v;
     }
 
+    // Run fab animation
     private void animateFAB() {
 
         if (isFabOpen) {
@@ -103,33 +115,23 @@ public class VolumeListFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mContext = context;
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
         mContext = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(String uri);
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case PrivateFilesConstants.SELECT_STORAGE_TYPE_DIALOG:
+                if (resultCode == Activity.RESULT_OK) {
+                    Bundle bundle = data.getExtras();
+                    String storage_type = bundle != null ? bundle.getString(PrivateFilesConstants.STORAGE_TYPE) : null;
+                }
+                break;
+        }
     }
 }

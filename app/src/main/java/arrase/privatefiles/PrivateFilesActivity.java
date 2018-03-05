@@ -9,8 +9,7 @@ import android.view.MenuItem;
 
 import arrase.privatefiles.fragments.VolumeListFragment;
 
-public class PrivateFilesActivity extends AppCompatActivity implements
-        VolumeListFragment.OnFragmentInteractionListener {
+public class PrivateFilesActivity extends AppCompatActivity {
 
     private FragmentManager mFragmentManager;
 
@@ -53,8 +52,4 @@ public class PrivateFilesActivity extends AppCompatActivity implements
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onFragmentInteraction(String uri) {
-
-    }
 }
