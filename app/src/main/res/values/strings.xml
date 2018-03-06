@@ -6,4 +6,6 @@
     <string name="internal_storage">Internal storage</string>
     <string name="create_volume">Create new volume</string>
     <string name="import_volume">Import existing volume</string>
+    <string name="enable_pin">Enable PIN</string>
+    <string name="save_passwords">Save passwords</string>
 </resources>
